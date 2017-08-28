@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
     
     rapidjson::Document doc;
 	rapidjson::Document doc2;
+	bool hasSecondBotConfig;
     std::string config = JSONTools::ReadFile("BotConfig.txt");
     if (config.length() == 0)
     {
@@ -31,7 +32,8 @@ int main(int argc, char* argv[])
         exit(-1);
     }
 	std::string config2 = JSONTools::ReadFile("BotConfig2.txt");
-	if (config2.length() == 0)
+	hasSecondBotConfig = config2.length() > 0;
+	if (!hasSecondBotConfig)
 	{
 		std::cerr << "2nd Config file could not be found, and is required for battling bots\n";
 	}
@@ -43,7 +45,7 @@ int main(int argc, char* argv[])
         std::cerr << "Please read the instructions and try again\n";
         exit(-1);
     }
-	if (config2.length() > 0) {
+	if (hasSecondBotConfig) {
 		parsingFailed = doc2.Parse(config2.c_str()).HasParseError();
 		if (parsingFailed)
 		{
@@ -85,7 +87,7 @@ int main(int argc, char* argv[])
 
 	sc2::PlayerSetup player1 = CreateParticipant(Util::GetRaceFromString(botRaceString), &bot);
 	sc2::PlayerSetup player2;
-	if (config2.length() > 0) {
+	if (hasSecondBotConfig) {
 		bot2.SetConfigFileLocation("BotConfig2.txt");
 		player2 = CreateParticipant(Util::GetRaceFromString(bot2RaceString), &bot2);
 	}
