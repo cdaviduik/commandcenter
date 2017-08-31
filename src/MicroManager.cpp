@@ -126,14 +126,7 @@ void MicroManager::regroup(const sc2::Point2D & regroupPosition) const
         auto unit = m_bot.GetUnit(unitTag);
         BOT_ASSERT(unit, "null unit in MicroManager regroup");
 
-        int unitDistanceFromBase = m_bot.Map().getGroundDistance(unit->pos, ourBasePosition);
-
-        // if the unit is outside the regroup area
-        if (unitDistanceFromBase > regroupDistanceFromBase)
-        {
-            Micro::SmartMove(unitTag, ourBasePosition, m_bot);
-        }
-        else if (Util::Dist(unit->pos, regroupPosition) > 4)
+		if (Util::Dist(unit->pos, regroupPosition) > 2)
         {
             // regroup it
             Micro::SmartMove(unitTag, regroupPosition, m_bot);

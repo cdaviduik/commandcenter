@@ -290,6 +290,8 @@
     <ClCompile Include="..\src\BuildingPlacer.cpp" />
     <ClCompile Include="..\src\BuildOrder.cpp" />
     <ClCompile Include="..\src\BuildOrderQueue.cpp" />
+    <ClCompile Include="..\src\ExampleBot.cpp" />
+    <ClCompile Include="..\src\CDBots\TerranMarineRush\CDTerranMarineRushBot.cpp" />
     <ClCompile Include="..\src\CombatCommander.cpp" />
     <ClCompile Include="..\src\DistanceMap.cpp" />
     <ClCompile Include="..\src\GameCommander.cpp" />
@@ -325,6 +327,8 @@
     <ClInclude Include="..\src\BuildingPlacer.h" />
     <ClInclude Include="..\src\BuildOrder.h" />
     <ClInclude Include="..\src\BuildOrderQueue.h" />
+    <ClInclude Include="..\src\ExampleBot.h" />
+    <ClInclude Include="..\src\CDBots\TerranMarineRush\CDTerranMarineRushBot.h" />
     <ClInclude Include="..\src\CombatCommander.h" />
     <ClInclude Include="..\src\Common.h" />
     <ClInclude Include="..\src\BotConfig.h" />

@@ -25,7 +25,9 @@ void ProductionManager::setBuildOrder(const BuildOrder & buildOrder)
 void ProductionManager::onStart()
 {
     m_buildingManager.onStart();
-    setBuildOrder(m_bot.Strategy().getOpeningBookBuildOrder());
+	if (!m_bot.HasBuildOrder()) {
+		setBuildOrder(m_bot.Strategy().getOpeningBookBuildOrder());
+	}
 }
 
 void ProductionManager::onFrame()
@@ -49,6 +51,8 @@ void ProductionManager::onUnitDestroy(const sc2::Unit & unit)
 
 void ProductionManager::manageBuildOrderQueue()
 {
+	m_bot.QueueProductionItems(this);
+
     // if there is nothing in the queue, oh well
     if (m_queue.isEmpty())
     {
@@ -228,6 +232,18 @@ bool ProductionManager::meetsReservedResources(const BuildType & type)
 {
     // return whether or not we meet the resources
     return (m_bot.Data(type).mineralCost <= getFreeMinerals()) && (m_bot.Data(type).gasCost <= getFreeGas());
+}
+
+void ProductionManager::clearQueue() {
+	m_queue.clearAll();
+}
+
+void ProductionManager::queueAsLowestPriority(const BuildType & type, bool blocking) {
+	m_queue.queueAsLowestPriority(type, blocking);
+}
+
+void ProductionManager::queueAsHighestPriority(const BuildType & type, bool blocking) {
+	m_queue.queueAsHighestPriority(type, blocking);
 }
 
 void ProductionManager::drawProductionInformation()

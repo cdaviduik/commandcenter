@@ -268,6 +268,7 @@ void WorkerData::drawDepotDebugInfo()
     for (auto & depotTag : m_depots)
     {
         auto depot = m_bot.GetUnit(depotTag);
+		if (depot == NULL) continue;
 
         std::stringstream ss;
         ss << "Workers: " << getNumAssignedWorkers(depot->tag);

@@ -150,7 +150,14 @@ void Squad::addUnitsToMicroManagers()
 // TODO: calculates whether or not to regroup
 bool Squad::needsToRegroup() const
 {
-    return false;
+	// if there are few units near unit closest to enemy then regroup
+	const int min_units_for_squad = 10;
+	UnitTag unit_tag = unitClosestToEnemy();
+	auto unit = m_bot.GetUnit(unit_tag);
+	if (unit && squadUnitsNear(unit->pos) < min_units_for_squad) {
+		return true;
+	}
+	return false;
 }
 
 void Squad::setSquadOrder(const SquadOrder & so)
@@ -218,21 +225,25 @@ sc2::Point2D Squad::calcRegroupPosition() const
 {
     sc2::Point2D regroup(0.0f,0.0f);
 
+	// regroup to unit this number of units away from enemy
+	const int regroupIndex = 8;
     float minDist = std::numeric_limits<float>::max();
-
+	float maxDist = std::numeric_limits<float>::min();
+	std::vector<int> maxDistances;
+	sc2::Point2D ourBasePosition = m_bot.GetStartLocation();
+	
     for (auto & unitTag : m_units)
     {
         auto unit = m_bot.GetUnit(unitTag);
+		int unitDistanceFromBase = m_bot.Map().getGroundDistance(unit->pos, ourBasePosition);
+		maxDistances.push_back(unitDistanceFromBase);
 
-        if (!m_nearEnemy.at(unitTag))
-        {
-            float dist = Util::Dist(m_order.getPosition(), unit->pos);
-            if (dist < minDist)
-            {
-                minDist = dist;
-                regroup = unit->pos;
-            }
-        }
+		std::sort(maxDistances.begin(), maxDistances.end());
+		int regroupDistance = maxDistances.size() <= regroupIndex ? maxDistances.front() : maxDistances.at(maxDistances.size() - regroupIndex);
+
+		if (unitDistanceFromBase == regroupDistance) {
+			regroup = unit->pos;
+		}
     }
 
     if (regroup.x == 0.0f && regroup.y == 0.0f)
@@ -277,7 +288,7 @@ int Squad::squadUnitsNear(const sc2::Point2D & p) const
         auto unit = m_bot.GetUnit(unitTag);
         BOT_ASSERT(unit, "null unit");
 
-        if (Util::Dist(unit->pos, p) < 20.0f)
+        if (Util::Dist(unit->pos, p) < 10.0f)
         {
             numUnits++;
         }

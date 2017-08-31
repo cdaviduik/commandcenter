@@ -41,17 +41,23 @@ void RangedManager::assignTargets(const std::vector<UnitTag> & targets)
         {
             if (!rangedUnitTargets.empty())
             {
-                // find the best target for this meleeUnit
+                // find the best target for this rangedUnit
                 UnitTag targetTag = getTarget(rangedUnitTag, rangedUnitTargets);
+				auto targetUnit = m_bot.GetUnit(targetTag);
+				auto rangedUnit = m_bot.GetUnit(rangedUnitTag);
 
-                // attack it
-                if (m_bot.Config().KiteWithRangedUnits)
+				// move back if getting attacked at melee distance
+				if (Util::Dist(rangedUnit->pos, targetUnit->pos) < 1) {					
+					Micro::SmartMove(rangedUnitTag, m_bot.GetStartLocation(), m_bot);
+				}
+				// attack it
+                else if (m_bot.Config().KiteWithRangedUnits)
                 {
                     Micro::SmartKiteTarget(rangedUnitTag, targetTag, m_bot);
                 }
                 else
                 {
-                    Micro::SmartAttackUnit(rangedUnitTag, targetTag, m_bot);
+					Micro::SmartAttackMove(rangedUnitTag, targetUnit->pos, m_bot);
                 }
             }
             // if there are no targets

@@ -149,6 +149,7 @@ void BuildingManager::constructAssignedBuildings()
         }
         else
         {
+			if (!builderUnit) continue;
             BOT_ASSERT(builderUnit, "null builder unit");
             isConstructing = (builderUnit->orders.size() > 0) && (builderUnit->orders[0].ability_id == buildAbility);
         }

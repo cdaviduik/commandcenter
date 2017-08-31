@@ -19,7 +19,7 @@ void TechTree::onStart()
 
 void TechTree::initUnitTypeData()
 {
-    m_upgradeData[0] = TypeData();
+	m_unitTypeData[0] = TypeData();
 
     // Protoss Buildings                                                                                  unit  bld   wrk    rfn    sup    hall   add
     m_unitTypeData[sc2::UNIT_TYPEID::PROTOSS_PYLON] =                   { sc2::Race::Protoss, 0, 0, 0, 0, true, true, false, false,  true, false, false, sc2::ABILITY_ID::BUILD_PYLON, 0, { sc2::UNIT_TYPEID::PROTOSS_PROBE }, {}, {} }; 
@@ -112,6 +112,7 @@ void TechTree::initUnitTypeData()
     m_unitTypeData[sc2::UNIT_TYPEID::TERRAN_RAVEN] =                    { sc2::Race::Terran, 0, 0, 2, 0, true, false, false, false, false, false, false, sc2::ABILITY_ID::TRAIN_RAVEN, 0, { sc2::UNIT_TYPEID::TERRAN_STARPORT }, { sc2::UNIT_TYPEID::TERRAN_TECHLAB, sc2::UNIT_TYPEID::TERRAN_BARRACKSTECHLAB, sc2::UNIT_TYPEID::TERRAN_FACTORYTECHLAB, sc2::UNIT_TYPEID::TERRAN_STARPORTTECHLAB }, {} };
     m_unitTypeData[sc2::UNIT_TYPEID::TERRAN_MEDIVAC] =                  { sc2::Race::Terran, 0, 0, 2, 0, true, false, false, false, false, false, false, sc2::ABILITY_ID::TRAIN_MEDIVAC, 0, { sc2::UNIT_TYPEID::TERRAN_STARPORT }, {}, {} };
     m_unitTypeData[sc2::UNIT_TYPEID::TERRAN_MULE] =                     { sc2::Race::Terran, 0, 0, 0, 0, true, false, false, false, false, false, false, sc2::ABILITY_ID::EFFECT_CALLDOWNMULE, 0, { sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND }, {}, {} }; 
+	m_unitTypeData[sc2::UNIT_TYPEID::TERRAN_KD8CHARGE] =				{ sc2::Race::Terran, 0, 0, 0, 0, true, false, false, false, false, false, false, sc2::ABILITY_ID::EFFECT_KD8CHARGE, 0,{ sc2::UNIT_TYPEID::TERRAN_REAPER },{},{} };
 
     // Zerg Buildings                                                                      m  g  s  t  unit  bld   wrk    rfn    sup    hall   add
     m_unitTypeData[sc2::UNIT_TYPEID::ZERG_HATCHERY] =                   { sc2::Race::Zerg, 0, 0, 0, 0, true, true, false, false, false,  true, false, sc2::ABILITY_ID::BUILD_HATCHERY, 0, { sc2::UNIT_TYPEID::ZERG_DRONE }, {}, {} }; 
@@ -148,6 +149,10 @@ void TechTree::initUnitTypeData()
     m_unitTypeData[sc2::UNIT_TYPEID::ZERG_QUEEN] =                      { sc2::Race::Zerg, 0, 0, 2, 0, true, false, false, false, false, false, false, sc2::ABILITY_ID::TRAIN_QUEEN, 0, { sc2::UNIT_TYPEID::ZERG_HATCHERY, sc2::UNIT_TYPEID::ZERG_LAIR, sc2::UNIT_TYPEID::ZERG_HIVE }, { sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL }, {} };
     m_unitTypeData[sc2::UNIT_TYPEID::ZERG_LARVA] =                      { sc2::Race::Zerg, 0, 0, 2, 0, true, false, false, false, false, false, false, 0, 0, { 0 }, { 0 }, {} };
     m_unitTypeData[sc2::UNIT_TYPEID::ZERG_EGG] =                        { sc2::Race::Zerg, 0, 0, 2, 0, true, false, false, false, false, false, false, 0, 0, { 0 }, { 0 }, {} };
+	m_unitTypeData[sc2::UNIT_TYPEID::ZERG_RAVAGER] =					{ sc2::Race::Zerg, 0, 0, 2, 0, true, false, false, false, false, false, false, sc2::ABILITY_ID::MORPH_RAVAGER, 0,{ sc2::UNIT_TYPEID::ZERG_ROACH },{ sc2::UNIT_TYPEID::ZERG_ROACHWARREN },{} };
+	m_unitTypeData[sc2::UNIT_TYPEID::ZERG_RAVAGERCOCOON] =				{ sc2::Race::Zerg, 0, 0, 2, 0, true, false, false, false, false, false, false, sc2::ABILITY_ID::MORPH_RAVAGER, 0,{ sc2::UNIT_TYPEID::ZERG_ROACH },{ sc2::UNIT_TYPEID::ZERG_ROACHWARREN },{} };
+	m_unitTypeData[sc2::UNIT_TYPEID::ZERG_BROODLING] =					{ sc2::Race::Zerg, 0, 0, 2, 0, true, false, false, false, false, false, false, 0, 0, { 0 },{ 0 }, {} };
+	
 
     // Set the Mineral / Gas cost of each unit
     for (auto & kv : m_unitTypeData)

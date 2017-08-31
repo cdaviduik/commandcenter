@@ -70,11 +70,6 @@ BotConfig & CCBot::Config()
      return m_config;
 }
 
-void CCBot::SetConfigFileLocation(std::string configFileLocation)
-{
-	m_config.ConfigFileLocation = configFileLocation;
-}
-
 const MapTools & CCBot::Map() const
 {
     return m_map;
@@ -123,6 +118,42 @@ const sc2::Unit * CCBot::GetUnit(const UnitTag & tag) const
 sc2::Point2D CCBot::GetStartLocation() const
 {
     return Observation()->GetStartLocation();
+}
+
+void CCBot::SetConfigFileLocation(std::string configFileLocation)
+{
+	m_config.ConfigFileLocation = configFileLocation;
+}
+
+bool CCBot::HasBuildOrder() {
+	return false;
+}
+
+void CCBot::QueueProductionItems(ProductionManager *pm) {
+	return;
+}
+
+int CCBot::CountUnitType(const sc2::ObservationInterface* observation, sc2::UnitTypeID unit_type) {
+	int count = 0;
+	sc2::Units my_units = observation->GetUnits(sc2::Unit::Alliance::Self);
+	for (const sc2::Unit& unit : my_units) {
+		if (unit.unit_type == unit_type)
+			++count;
+	}
+
+	return count;
+}
+
+bool CCBot::IsBuildingStructure(const sc2::ObservationInterface* observation, sc2::AbilityID ability_type_for_structure) {
+	sc2::Units units = observation->GetUnits(sc2::Unit::Alliance::Self);
+	for (const auto& unit : units) {
+		for (const auto& order : unit.orders) {
+			if (order.ability_id == ability_type_for_structure) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 void CCBot::OnError(const std::vector<sc2::ClientError> & client_errors, const std::vector<std::string> & protocol_errors)

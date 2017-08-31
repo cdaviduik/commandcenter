@@ -27,6 +27,8 @@ class CCBot : public sc2::Agent
 
     GameCommander           m_gameCommander;
 
+	bool					m_hasBuildOrder;
+
     void OnError(const std::vector<sc2::ClientError> & client_errors, 
                  const std::vector<std::string> & protocol_errors = {}) override;
 
@@ -36,9 +38,8 @@ public:
     void OnGameStart() override;
     void OnStep() override;
 
-          BotConfig & Config();
-		  void SetConfigFileLocation(std::string configFileLocation);
-          WorkerManager & Workers();
+    BotConfig & Config();
+	WorkerManager & Workers();
     const BaseLocationManager & Bases() const;
     const MapTools & Map() const;
     const UnitInfoManager & UnitInfo() const;
@@ -49,4 +50,10 @@ public:
     const sc2::Race & GetPlayerRace(int player) const;
     sc2::Point2D GetStartLocation() const;
     const sc2::Unit * GetUnit(const UnitTag & tag) const;
+
+	void SetConfigFileLocation(std::string configFileLocation);
+	virtual bool HasBuildOrder();
+	virtual void QueueProductionItems(ProductionManager *pm);
+	int		CountUnitType(const sc2::ObservationInterface* observation, sc2::UnitTypeID unit_type);
+	bool	IsBuildingStructure(const sc2::ObservationInterface* observation, sc2::AbilityID ability_type_for_structure);
 };

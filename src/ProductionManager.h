@@ -15,7 +15,6 @@ class ProductionManager
     BuildOrderQueue m_queue;
 
     UnitTag getClosestUnitToPosition(const std::vector<UnitTag> & units, sc2::Point2D closestTo);
-    bool    meetsReservedResources(const BuildType & type);
     bool    canMakeNow(UnitTag producer, const BuildType & type);
     bool    detectBuildOrderDeadlock();
     void    setBuildOrder(const BuildOrder & buildOrder);
@@ -32,6 +31,12 @@ public:
     void    onFrame();
     void    onUnitDestroy(const sc2::Unit & unit);
     void    drawProductionInformation();
+	bool    meetsReservedResources(const BuildType & type);
+
+	void clearQueue();
+	void queueAsLowestPriority(const BuildType & type, bool blocking);
+	void queueAsHighestPriority(const BuildType & type, bool blocking);
+
 
     UnitTag getProducer(const BuildType & type, sc2::Point2D closestTo = sc2::Point2D(0, 0));
 };

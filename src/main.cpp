@@ -10,6 +10,7 @@
 #include <cmath>
 
 #include "CCBot.h"
+#include "../src/CDBots/TerranMarineRush/CDTerranMarineRushBot.h"
 
 
 int main(int argc, char* argv[]) 
@@ -49,7 +50,7 @@ int main(int argc, char* argv[])
 		parsingFailed = doc2.Parse(config2.c_str()).HasParseError();
 		if (parsingFailed)
 		{
-			std::cerr << "Config file 2 could not be parsed, and is required for starting the bot\n";
+			std::cerr << "BotConfig2.txt could not be parsed, and is required for starting the second bot\n";
 			std::cerr << "Please read the instructions and try again\n";
 			exit(-1);
 		}
@@ -82,10 +83,12 @@ int main(int argc, char* argv[])
     }
 
     // Add the custom bot, it will control the players.
-    CCBot bot;
+    //CCBot bot;
 	CCBot bot2;
-
-	sc2::PlayerSetup player1 = CreateParticipant(Util::GetRaceFromString(botRaceString), &bot);
+	CDTerranMarineRushBot cdBot;
+	
+	//sc2::PlayerSetup player1 = CreateParticipant(Util::GetRaceFromString(botRaceString), &bot);
+	sc2::PlayerSetup player1 = CreateParticipant(sc2::Race::Terran, &cdBot);
 	sc2::PlayerSetup player2;
 	if (hasSecondBotConfig) {
 		bot2.SetConfigFileLocation("BotConfig2.txt");

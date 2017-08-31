@@ -97,6 +97,10 @@
     <ClCompile Include="..\src\TechTree.cpp">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\CDBots\TerranMarineRush\CDTerranMarineRushBot.cpp">
+      <Filter>CDBots</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ExampleBot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\BaseLocationManager.h">
@@ -200,6 +204,10 @@
     <ClInclude Include="..\src\TechTree.h">
       <Filter>util</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\CDBots\TerranMarineRush\CDTerranMarineRushBot.h">
+      <Filter>CDBots</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ExampleBot.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="global">
@@ -216,6 +224,9 @@
     </Filter>
     <Filter Include="micro">
       <UniqueIdentifier>{9829f5c0-728d-4121-8884-bf1fddd88a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CDBots">
+      <UniqueIdentifier>{f9760333-ac38-4c51-9ec3-07ea25c42fcb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
